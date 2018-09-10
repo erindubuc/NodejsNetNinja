@@ -1,25 +1,8 @@
-var events = require('events');
-var util = require('util');
+var fs = require('fs');
 
-// create new object constructor
-var Person = function(name){
-    this.name = name;
-};
-
-// want to inherit the event emitter
-// attach events to people
-util.inherits(Person, events.EventEmitter);
-
-var james = new Person('james');
-var mary = new Person('mary');
-var ryu = new Person('ryu');
-var people = [james, mary, ryu];
-
-people.forEach(function(Person){
-    Person.on('speak', function(mssg){
-        console.log(Person.name + ' said: ' + mssg);
-    });
+// need a file to read
+fs.readFile('readme.txt', 'utf8', function(err, data){
+   fs.writeFile('writeMe.txt', data);
 });
 
-james.emit('speak', 'hey dudes');
-ryu.emit('speak', 'I want a curry');
+
