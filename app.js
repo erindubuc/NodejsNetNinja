@@ -2,17 +2,19 @@ var express = require('express');
 // to get access to the variable express, create app
 var app = express();
 
-// routes that respond to get requests
-// since we're using express, don't need to tell content-type
+app.set('view engine', 'ejs');
+
 app.get('/', function(req, res){
-    res.send('this is the homepage');   
+    res.sendFile(__dirname + '/index.html');   
 });
 app.get('/contact', function(req, res){
-    res.send('this is the contact page');   
+    res.sendFile(__dirname + '/contact.html');   
 });
 
 app.get('/profile/:name', function(req, res){
-    res.send('You requested to see a profile with the name of ' + req.params.name);
+    // when a user queries a profile, we can insert more data into the view
+    var data = {age: 29, job: 'ninja'};
+    res.render('profile', {person: req.params.name, data: data});
 });
 // need port 8080 for c9
 app.listen(8080);
